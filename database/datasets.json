@@ -1,0 +1,28 @@
+{
+    "datasets": [
+        {
+            "faqs": [
+                "Top 5 Accounts data by gross ASV for 2023 Q4 where sales stage is greater than S4.",
+                "Gross ASV by global region by quarter where sales stage is Closed - Booked. Show a visual.",
+                "Top 5 Products data in EMEA for 2023 with highest gross asv."
+            ],
+            "name": "Global Pipeline Review - YOY"
+        },
+        {
+            "faqs": [
+                "Top 5 rep details where attainment > 60 %  in Q2.",
+                "For each global region, show attainment for all quarters. Show as bar chart",
+                "Show quota and won data in each quarter for all global region."
+            ],
+            "name": "FY23 Attainment across sales team"
+        },
+        {
+            "faqs": [
+                "FAQ 1",
+                "FAQ 2",
+                "FAQ 3"
+            ],
+            "name": "Top Accounts across regions"
+        }
+    ]
+}

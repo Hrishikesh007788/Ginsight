@@ -1,0 +1,221 @@
+2024-01-30 15:14:17 [INFO] Question: top 5 accounts data by gross asv for 2023 q4 where sales stage is greater than s4.. Import tabulate. disable_numparse=True. dropna(axis=1)
+2024-01-30 15:14:17 [INFO] Running PandasAI with azure-openai LLM...
+2024-01-30 15:14:17 [INFO] Prompt ID: 141ca633-5c84-452d-8f3c-4d003b045e12
+2024-01-30 15:14:17 [INFO] Using cached response
+2024-01-30 15:14:17 [INFO] Code generated:
+```
+# TODO import all the dependencies required
+import pandas as pd
+from tabulate import tabulate
+
+def analyze_data(dfs: list[pd.DataFrame]) -> dict:
+    """
+    Analyze the data, using the provided dataframes (`dfs`).
+    1. Prepare: Preprocessing and cleaning data if necessary
+    2. Process: Manipulating data for analysis (grouping, filtering, aggregating, etc.)
+    3. Analyze: Conducting the actual analysis (if the user asks to plot a chart you must save it as an image in temp_chart.png and not show the chart.)
+    If the user requests to create a chart, utilize the Python matplotlib library to generate high-quality graphics that will be saved directly to a file.
+    At the end, return a dictionary of:
+    - type (possible values "string", "number", "dataframe", "plot")
+    - value (can be a string, a dataframe or the path of the plot, NOT a dictionary)
+    Examples: 
+        { "type": "string", "value": f"The highest salary is {highest_salary}." }
+        or
+        { "type": "number", "value": 125 }
+        or
+        { "type": "dataframe", "value": pd.DataFrame({...}) }
+        or
+        { "type": "plot", "value": "temp_chart.png" }
+    """
+    
+    # Prepare
+    df0 = dfs[0]
+    df1 = dfs[1]
+    
+    # Filter data
+    filtered_df0 = df0[(df0['SALES_STAGE'] > 'S4') & (df0['YEAR'] == 2023) & (df0['QUARTER'] == 'Q4')]
+    
+    # Group by account and sum gross asv
+    grouped_df0 = filtered_df0.groupby('ACCOUNT').agg({'GROSS_ASV $': 'sum'}).reset_index()
+    
+    # Sort by gross asv and get top 5 accounts
+    sorted_df0 = grouped_df0.sort_values(by='GROSS_ASV $', ascending=False).head(5)
+    
+    # Format output as table
+    table = tabulate(sorted_df0, headers='keys', tablefmt='psql', showindex=False, disable_numparse=True, dropna='all')
+    
+    return {"type": "string", "value": table}
+```
+
+2024-01-30 15:14:17 [INFO] Saving charts to static\images\141ca633-5c84-452d-8f3c-4d003b045e12.png
+2024-01-30 15:14:17 [INFO] 
+Code running:
+```
+matplotlib.use('agg')
+matplotlib.use('agg')
+matplotlib.use('agg')
+matplotlib.use('agg')
+matplotlib.use('agg')
+matplotlib.use('agg')
+
+
+def analyze_data(dfs: list[pd.DataFrame]) ->dict:
+    """
+    Analyze the data, using the provided dataframes (`dfs`).
+    1. Prepare: Preprocessing and cleaning data if necessary
+    2. Process: Manipulating data for analysis (grouping, filtering, aggregating, etc.)
+    3. Analyze: Conducting the actual analysis (if the user asks to plot a chart you must save it as an image in static/images/141ca633-5c84-452d-8f3c-4d003b045e12.png and not show the chart.)
+    If the user requests to create a chart, utilize the Python matplotlib library to generate high-quality graphics that will be saved directly to a file.
+    At the end, return a dictionary of:
+    - type (possible values "string", "number", "dataframe", "plot")
+    - value (can be a string, a dataframe or the path of the plot, NOT a dictionary)
+    Examples: 
+        { "type": "string", "value": f"The highest salary is {highest_salary}." }
+        or
+        { "type": "number", "value": 125 }
+        or
+        { "type": "dataframe", "value": pd.DataFrame({...}) }
+        or
+        { "type": "plot", "value": "static/images/141ca633-5c84-452d-8f3c-4d003b045e12.png" }
+    """
+    df0 = dfs[0]
+    df1 = dfs[1]
+    filtered_df0 = df0[(df0['SALES_STAGE'] > 'S4') & (df0['YEAR'] == 2023) & (df0['QUARTER'] == 'Q4')]
+    grouped_df0 = filtered_df0.groupby('ACCOUNT').agg({'GROSS_ASV $': 'sum'}).reset_index()
+    sorted_df0 = grouped_df0.sort_values(by='GROSS_ASV $', ascending=False).head(5)
+    table = tabulate(sorted_df0, headers='keys', tablefmt='psql', showindex=False, disable_numparse=True, dropna='all')
+    return {'type': 'string', 'value': table}
+        ```
+2024-01-30 15:14:17 [WARNING] Error of executing code
+2024-01-30 15:14:17 [WARNING] Error of executing code
+2024-01-30 15:14:17 [WARNING] Failed to execute code with a correction framework [retry number: 1]
+2024-01-30 15:14:17 [ERROR] Failed with error: Traceback (most recent call last):
+  File "C:\Users\hrishikeshd\Desktop\GenInsight\venv\Lib\site-packages\pandasai\smart_datalake\__init__.py", line 438, in chat
+    result = self._code_manager.execute_code(
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\hrishikeshd\Desktop\GenInsight\venv\Lib\site-packages\pandasai\helpers\code_manager.py", line 286, in execute_code
+    return analyze_data(self._get_originals(dfs))
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<string>", line 33, in analyze_data
+TypeError: tabulate() got an unexpected keyword argument 'dropna'
+. Retrying
+2024-01-30 15:14:17 [INFO] Using prompt: 
+You are provided with the following pandas DataFrames with the following metadata:
+
+<dataframe>
+Dataframe dfs[0], with 52300 rows and 8 columns.
+This is the metadata of the dataframe dfs[0]:
+YEAR,QUARTER,GLOBAL_REGION,SALES_TEAM,SALES_STAGE,ACCOUNT,PRODUCT,GROSS_ASV $
+</dataframe>
+
+<dataframe>
+Dataframe dfs[1], with 2519 rows and 8 columns.
+This is the metadata of the dataframe dfs[1]:
+YEAR,QUARTER,GLOBAL_REGION,SALES_TEAM,REP_NAME,QUOTA $,WON $,ATTAINMENT %
+</dataframe>
+
+The user asked the following question:
+User: top 5 accounts data by gross asv for 2023 q4 where sales stage is greater than s4.. Import tabulate. disable_numparse=True. dropna(axis=1)
+
+You generated this python code:
+# TODO import all the dependencies required
+import pandas as pd
+from tabulate import tabulate
+
+def analyze_data(dfs: list[pd.DataFrame]) -> dict:
+    """
+    Analyze the data, using the provided dataframes (`dfs`).
+    1. Prepare: Preprocessing and cleaning data if necessary
+    2. Process: Manipulating data for analysis (grouping, filtering, aggregating, etc.)
+    3. Analyze: Conducting the actual analysis (if the user asks to plot a chart you must save it as an image in temp_chart.png and not show the chart.)
+    If the user requests to create a chart, utilize the Python matplotlib library to generate high-quality graphics that will be saved directly to a file.
+    At the end, return a dictionary of:
+    - type (possible values "string", "number", "dataframe", "plot")
+    - value (can be a string, a dataframe or the path of the plot, NOT a dictionary)
+    Examples: 
+        { "type": "string", "value": f"The highest salary is {highest_salary}." }
+        or
+        { "type": "number", "value": 125 }
+        or
+        { "type": "dataframe", "value": pd.DataFrame({...}) }
+        or
+        { "type": "plot", "value": "temp_chart.png" }
+    """
+    
+    # Prepare
+    df0 = dfs[0]
+    df1 = dfs[1]
+    
+    # Filter data
+    filtered_df0 = df0[(df0['SALES_STAGE'] > 'S4') & (df0['YEAR'] == 2023) & (df0['QUARTER'] == 'Q4')]
+    
+    # Group by account and sum gross asv
+    grouped_df0 = filtered_df0.groupby('ACCOUNT').agg({'GROSS_ASV $': 'sum'}).reset_index()
+    
+    # Sort by gross asv and get top 5 accounts
+    sorted_df0 = grouped_df0.sort_values(by='GROSS_ASV $', ascending=False).head(5)
+    
+    # Format output as table
+    table = tabulate(sorted_df0, headers='keys', tablefmt='psql', showindex=False, disable_numparse=True, dropna='all')
+    
+    return {"type": "string", "value": table}
+
+It fails with the following error:
+Traceback (most recent call last):
+  File "C:\Users\hrishikeshd\Desktop\GenInsight\venv\Lib\site-packages\pandasai\smart_datalake\__init__.py", line 438, in chat
+    result = self._code_manager.execute_code(
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\hrishikeshd\Desktop\GenInsight\venv\Lib\site-packages\pandasai\helpers\code_manager.py", line 286, in execute_code
+    return analyze_data(self._get_originals(dfs))
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<string>", line 33, in analyze_data
+TypeError: tabulate() got an unexpected keyword argument 'dropna'
+
+
+Correct the python code and return a new python code that fixes the above mentioned error. Do not generate the same code again.
+
+2024-01-30 15:14:24 [INFO] HTTP Request: POST https://openai-so-gpt.openai.azure.com//openai/deployments/gpt-35turbo-deployment/chat/completions?api-version=2023-05-15 "HTTP/1.1 200 OK"
+2024-01-30 15:14:24 [INFO] Saving charts to static\images\141ca633-5c84-452d-8f3c-4d003b045e12.png
+2024-01-30 15:14:24 [INFO] 
+Code running:
+```
+matplotlib.use('agg')
+matplotlib.use('agg')
+matplotlib.use('agg')
+matplotlib.use('agg')
+matplotlib.use('agg')
+matplotlib.use('agg')
+
+
+def analyze_data(dfs: list[pd.DataFrame]) ->dict:
+    """
+    Analyze the data, using the provided dataframes (`dfs`).
+    1. Prepare: Preprocessing and cleaning data if necessary
+    2. Process: Manipulating data for analysis (grouping, filtering, aggregating, etc.)
+    3. Analyze: Conducting the actual analysis (if the user asks to plot a chart you must save it as an image in static/images/141ca633-5c84-452d-8f3c-4d003b045e12.png and not show the chart.)
+    If the user requests to create a chart, utilize the Python matplotlib library to generate high-quality graphics that will be saved directly to a file.
+    At the end, return a dictionary of:
+    - type (possible values "string", "number", "dataframe", "plot")
+    - value (can be a string, a dataframe or the path of the plot, NOT a dictionary)
+    Examples: 
+        { "type": "string", "value": f"The highest salary is {highest_salary}." }
+        or
+        { "type": "number", "value": 125 }
+        or
+        { "type": "dataframe", "value": pd.DataFrame({...}) }
+        or
+        { "type": "plot", "value": "static/images/141ca633-5c84-452d-8f3c-4d003b045e12.png" }
+    """
+    df0 = dfs[0]
+    df1 = dfs[1]
+    filtered_df0 = df0[(df0['SALES_STAGE'] > 'S4') & (df0['YEAR'] == 2023) & (df0['QUARTER'] == 'Q4')]
+    grouped_df0 = filtered_df0.groupby('ACCOUNT').agg({'GROSS_ASV $': 'sum'}).reset_index()
+    sorted_df0 = grouped_df0.sort_values(by='GROSS_ASV $', ascending=False).head(5)
+    table = tabulate(sorted_df0, headers='keys', tablefmt='psql', showindex=False, disable_numparse=True)
+    return {'type': 'string', 'value': table}
+        ```
+2024-01-30 15:14:24 [WARNING] Error of executing code
+2024-01-30 15:14:24 [INFO] Answer: {'type': 'string', 'value': '+-----------------------------------------+--------------------+\n| ACCOUNT                                 | GROSS_ASV $        |\n|-----------------------------------------+--------------------|\n| Pxx xxtxmxbxlxx x.x.                    | 14672212.745299999 |\n| xxny xntxrxxtxvx xntxrtxxnmxnt Llx      | 12753512.0         |\n| xnxlxvxr x.K. xxntrxl Rxxxxrxxx Lxmxtxd | 10786180.493999999 |\n| xntxrpxblxx Grxxp                       | 10039000.0         |\n| Thx xxxx-xxlx xxmpxny                   | 10000000.0         |\n+-----------------------------------------+--------------------+'}
+2024-01-30 15:14:24 [INFO] Executed in: 6.906890392303467s
+2024-01-30 15:14:24 [INFO] 127.0.0.1 - - [30/Jan/2024 15:14:24] "POST / HTTP/1.1" 200 -
+2024-01-30 15:14:24 [INFO] 127.0.0.1 - - [30/Jan/2024 15:14:24] "[33mGET /static/images/python-logo.png HTTP/1.1[0m" 404 -
